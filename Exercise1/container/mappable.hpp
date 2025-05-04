@@ -43,7 +43,6 @@ public:
   // Specific member function
 
   using MapFun = std::function<void(Data &)>;
-
   virtual void Map (MapFun) = 0;
 
 };
@@ -51,7 +50,8 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PreOrderMappableContainer : virtual public MappableContainer<Data>, virtual public PreOrderTraversableContainer<Data>{
+class PreOrderMappableContainer : virtual public MappableContainer<Data>, virtual public PreOrderTraversableContainer<Data>
+{
 
 public:
 
@@ -75,12 +75,12 @@ public:
   // Specific member function
 
   using typename MappableContainer<Data>::MapFun;
-  virtual void PreOrderMap (MapFun) = 0;
+  virtual void PreOrderMap(MapFun) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
-  void Map (MapFun) override;
+  void Map(MapFun) override;
 
 };
 

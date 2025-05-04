@@ -3,21 +3,6 @@ namespace lasd
 {
 
 /***************************   LINEAR CONTAINER   **********************************/
-    template <typename Data>
-    bool LinearContainer<Data>::operator == (const LinearContainer<Data>& con) const noexcept
-    {
-        if(size != con.size)
-            return false;
-        else
-        {
-            for(ulong i = 0; i < size; i++)
-                {
-                    if(operator[](i) != con.operator[](i))
-                        return false;
-                }
-            return true;
-        }
-    }
 
     template <typename Data>
     inline const Data& LinearContainer<Data>::Front() const 
@@ -56,42 +41,27 @@ namespace lasd
     }
   
 /***************************   MUTABLE LINEAR CONTAINER   **********************************/
-    template <typename Data>
-    bool MutableLinearContainer<Data>::operator == (const MutableLinearContainer<Data>& con) const noexcept
-    {
-        if(size != con.size)
-            return false;
-        else
-        {
-            for(ulong i = 0; i < size; i++)
-                {
-                    if(operator[](i) != con.operator[](i))
-                        return false;
-                }
-            return true;
-        }
-    }
 
     template <typename Data>
-    inline const Data& MutableLinearContainer<Data>::Front() 
+    inline Data& MutableLinearContainer<Data>::Front() 
     {
         return operator[](0);
     }
 
     template <typename Data>
-    inline const Data& MutableLinearContainer<Data>::Back() 
+    inline Data& MutableLinearContainer<Data>::Back() 
     {
         return operator[](size - 1);
     }
 
     template <typename Data> 
-    inline void MutableLinearContainer<Data>::Traverse(TraverseFun fun) const
+    inline void MutableLinearContainer<Data>::Map(MapFun fun)
     {
-        PreOrderTraverse(fun);
+        PreOrderMap(fun);
     }
 
     template <typename Data> 
-    inline void MutableLinearContainer<Data>::PreOrderTraverse(TraverseFun fun) const
+    inline void MutableLinearContainer<Data>::PreOrderMap(MapFun fun)
     {
         for (ulong i=0; i < size; i++)
         {
@@ -100,7 +70,7 @@ namespace lasd
     }
 
     template <typename Data>
-    inline void MutableLinearContainer<Data>::PostOrderTraverse(TraverseFun fun) const
+    inline void MutableLinearContainer<Data>::PostOrderMap(MapFun fun)
     {
         for (ulong i = 1; i <= size; i++)
         {
@@ -109,22 +79,6 @@ namespace lasd
     }
 
 /***************************   SORTABLE CONTAINER   **********************************/
-
-template <typename Data>
-bool SortableLinearContainer<Data>::operator == (const SortableLinearContainer<Data>& con) const noexcept
-{
-    if(size != con.size)
-        return false;
-    else
-    {
-        for(ulong i = 0; i < size; i++)
-            {
-                if(operator[](i) != con.operator[](i))
-                    return false;
-            }
-        return true;
-    }
-}
 
 template <typename Data>
 void SortableLinearContainer<Data> :: Sort() noexcept 

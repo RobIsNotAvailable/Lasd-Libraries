@@ -67,7 +67,7 @@ class PreOrderTraversableContainer : virtual public TraversableContainer<Data>
   public:
 
   // Destructor
-  ~PreOrderTraversableContainer() = default; 
+  virtual ~PreOrderTraversableContainer() = default; 
 
 
   /* ************************************************************************ */
@@ -111,7 +111,7 @@ class PostOrderTraversableContainer : virtual public TraversableContainer<Data>
 public:
 
   // Destructor
-  ~PostOrderTraversableContainer() = default;
+  virtual ~PostOrderTraversableContainer() = default;
 
   /* ************************************************************************ */
 
