@@ -14,35 +14,20 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class Set {
-  // Must extend OrderedDictionaryContainer<Data>,
-  //             LinearContainer<Data>,
-  //             ClearableContainer
-
-private:
-
-  // ...
-
-protected:
-
-  // ...
-
+class Set : virtual public OrderedDictionaryContainer<Data>, virtual public LinearContainer<Data>, virtual public ClearableContainer
+{
 public:
 
   // Destructor
-  // ~Set() specifiers
+  virtual ~Set() = default;
 
   /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
-
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+  // Copy and Move assignment
+  Set operator = (const Set&) = delete; // Copy assignment of abstract types is not possible.
+  Set operator = (Set&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
 };
-
-/* ************************************************************************** */
 
 }
 
