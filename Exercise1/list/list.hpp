@@ -106,7 +106,7 @@ public:
   void InsertAtBack(const Data&); // Copy of the value
   void InsertAtBack(Data&&);      // Move of the value
   void RemoveFromBack();          // (must throw std::length_error when empty)
-  Data BackNRemove();             // (must throw std::length_error when empty)Data& 
+  Data BackNRemove();             // (must throw std::length_error when empty) 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from MutableLinearContainer)
@@ -174,10 +174,15 @@ public:
 
   void Clear () override; // Override ClearableContainer member
 
-protected:
+  protected:
 
-  // Auxiliary functions, if necessary!
+  // Auxiliary functions
+  void PreOrderTraverse(TraverseFun, const Node*) const;
+  void PostOrderTraverse(TraverseFun, const Node*) const;
 
+
+  void PreOrderMap(MapFun, Node*);
+  void PostOrderMap(MapFun, Node*);
 };
 
 /* ************************************************************************** */
