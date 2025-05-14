@@ -202,7 +202,7 @@ template <typename Data>
 void Vector<Data>::Clear()
 {
     delete[] Elements;
-    Elements=nullptr;
+    Elements = nullptr;
     size = 0;
 }
 
