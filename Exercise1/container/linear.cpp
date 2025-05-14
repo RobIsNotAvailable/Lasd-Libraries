@@ -97,37 +97,24 @@ inline void MutableLinearContainer<Data>::PostOrderMap(MapFun fun)
 /***************************   SORTABLE CONTAINER   **********************************/
 
 template <typename Data>
-void SortableLinearContainer<Data> :: Sort() noexcept 
+void SortableLinearContainer<Data>::Sort() noexcept
 {
-    QuickSort(0, size-1 );
+    InsertionSort();
 }
 
 template <typename Data>
-void SortableLinearContainer<Data> :: QuickSort (ulong p, ulong r) noexcept
+void SortableLinearContainer<Data>::InsertionSort() noexcept
 {
-    if (p < r)
+    for (ulong i = 1; i < size; i++)
     {
-        ulong q = Partition (p, r);
-        QuickSort (p, q);
-        QuickSort (q+1, r);
+        Data key = operator[](i);
+        ulong j = i;
+        while (j > 0 && operator[](j - 1) > key)
+        {
+            operator[](j) = operator[](j - 1);
+            --j;
+        }
+        operator[](j) = key;
     }
 }
-
-template <typename Data>
-ulong SortableLinearContainer<Data> :: Partition (ulong p, ulong r) noexcept
-{
-    Data x = operator[](p);
-    ulong i = p-1;
-    ulong j = r+1;
-    do {
-        do {j--;}
-        while (x < operator[](j));
-        do {i++;}
-        while (x > operator[](i));
-        if (i<j) { std::swap (operator[](i), operator[](j)); }
-    }
-    while (i<j);
-    return j;
-}
-
 }

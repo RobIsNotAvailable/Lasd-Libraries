@@ -204,7 +204,7 @@ Data SetVec<Data>::PredecessorNRemove(const Data& searchVal)
 
     Data val = (*this)[i];
 
-    ShiftRight(i);
+    DeleteAt(i);
     Reduce();
     size--;
     return val;
@@ -223,7 +223,7 @@ void SetVec<Data>::RemovePredecessor(const Data& searchVal)
         i--;
     }
 
-    ShiftRight(i);
+    DeleteAt(i);
     Reduce();
     size--;
 }
@@ -257,7 +257,7 @@ Data SetVec<Data>::SuccessorNRemove(const Data& searchVal)
 
     Data val = (*this)[i];
 
-    ShiftLeft(i);
+    DeleteAt(i);
     Reduce();
     size--;
     return val;
@@ -276,7 +276,7 @@ void SetVec<Data>::RemoveSuccessor(const Data& searchVal)
         i++;
     }
 
-    ShiftLeft(i);
+    DeleteAt(i);
     Reduce();
     size--;
 }
@@ -339,7 +339,7 @@ bool SetVec<Data>::Remove(const Data& searchVal)
         return false;
     else
     {
-        ShiftLeft(i);
+        DeleteAt(i);
         Reduce();
         size--;
         return true;
@@ -389,7 +389,7 @@ inline void SetVec<Data>::Clear()
 // Auxiliary functions 
 
 template <typename Data>
-void SetVec<Data>::ShiftLeft(ulong i)
+void SetVec<Data>::DeleteAt(ulong i)
 {
     while (i < size - 1)
     {
@@ -397,17 +397,6 @@ void SetVec<Data>::ShiftLeft(ulong i)
         i++;
     }
     tail = (tail - 1 + elements.Size()) % elements.Size();
-}
-
-template <typename Data>
-void SetVec<Data>::ShiftRight(ulong i)
-{
-    while (i > 0)
-    {
-        elements[(head + i) % elements.Size()] = (*this)[i - 1];
-        i--;
-    }
-    ++head %= elements.Size();
 }
 
 template <typename Data>

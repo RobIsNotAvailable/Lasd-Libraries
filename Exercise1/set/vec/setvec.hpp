@@ -106,8 +106,7 @@ public:
 
 protected:
   // Auxiliary functions 
-  void ShiftLeft(ulong);
-  void ShiftRight(ulong);
+  void DeleteAt(ulong);
   void MakeSpace(ulong);
 
   void Expand();
