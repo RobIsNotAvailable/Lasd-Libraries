@@ -108,6 +108,7 @@ protected:
   // Auxiliary functions 
   void DeleteAt(ulong);
   void MakeSpace(ulong);
+  const ulong Find(const Data&) const;
 
   void Expand();
   void Reduce();

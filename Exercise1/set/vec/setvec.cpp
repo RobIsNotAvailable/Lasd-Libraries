@@ -8,7 +8,7 @@ namespace lasd {
 template <typename Data>
 SetVec<Data>::SetVec(const TraversableContainer<Data>& con)
 {
-    elements = Vector<Data>(static_cast<ulong>(con.Size()));
+    elements = Vector<Data>((con.Size()));
     con.Traverse
     (
         [this](const Data& dat)
@@ -159,7 +159,7 @@ Data lasd::SetVec<Data>::MaxNRemove()
         throw std::length_error("Access to an empty set.");
     
     Data val(std::move((*this)[size - 1]));
-    tail = (tail - 1 + elements.Size()) % elements.Size();
+    tail = (tail + elements.Size() - 1) % elements.Size();
     size--;
     Reduce();
     return val;
@@ -171,7 +171,7 @@ void SetVec<Data>::RemoveMax()
     if (size == 0)
         throw std::length_error("Access to an empty set.");
 
-    tail = (tail - 1 + elements.Size()) % elements.Size();
+    tail = (tail + elements.Size() - 1) % elements.Size();
     Reduce();
     size--;
 }
@@ -182,12 +182,7 @@ const Data& SetVec<Data>::Predecessor(const Data& searchVal) const
     if (size == 0 || searchVal <= (*this)[0])
         throw std::length_error("Predecessor not found.");
 
-    ulong i = size - 1;
-    while ((*this)[i] >= searchVal)
-    {
-        i--;
-    }
-    return (*this)[i];
+    return (*this)[Find(searchVal) - 1];
 }
 
 template <typename Data>
@@ -196,12 +191,7 @@ Data SetVec<Data>::PredecessorNRemove(const Data& searchVal)
     if (size == 0 || searchVal <= (*this)[0])
         throw std::length_error("Predecessor not found.");
 
-    ulong i = size - 1;
-    while ((*this)[i] >= searchVal)
-    {
-        i--;
-    }
-
+    ulong i = Find(searchVal) - 1;
     Data val = (*this)[i];
 
     DeleteAt(i);
@@ -217,13 +207,7 @@ void SetVec<Data>::RemovePredecessor(const Data& searchVal)
     if (size == 0 || searchVal <= (*this)[0])
         throw std::length_error("Predecessor not found.");
 
-    ulong i = size - 1;
-    while ((*this)[i] >= searchVal)
-    {
-        i--;
-    }
-
-    DeleteAt(i);
+    DeleteAt(Find(searchVal) - 1);
     Reduce();
     size--;
 }
@@ -235,11 +219,10 @@ const Data& SetVec<Data>::Successor(const Data& searchVal) const
     if (size == 0 || searchVal >= (*this)[size - 1])
         throw std::length_error("Successor not found.");
 
-    ulong i = 0;
-    while ((*this)[i] <= searchVal)
-    {
+    ulong i = Find(searchVal);
+    if ((*this)[i] == searchVal)
         i++;
-    }
+
     return (*this)[i];
 }
 
@@ -249,11 +232,9 @@ Data SetVec<Data>::SuccessorNRemove(const Data& searchVal)
     if (size == 0 || searchVal >= (*this)[size - 1])
         throw std::length_error("Successor not found.");
     
-    ulong i = 0;
-    while ((*this)[i] <= searchVal)
-    {
+    ulong i = Find(searchVal);
+    if ((*this)[i] == searchVal)
         i++;
-    }
 
     Data val = (*this)[i];
 
@@ -270,11 +251,9 @@ void SetVec<Data>::RemoveSuccessor(const Data& searchVal)
     if (size == 0 || searchVal >= (*this)[size - 1])
         throw std::length_error("Successor not found.");
     
-    ulong i = 0;
-    while ((*this)[i] <= searchVal)
-    {
+    ulong i = Find(searchVal);
+    if ((*this)[i] == searchVal)
         i++;
-    }
 
     DeleteAt(i);
     Reduce();
@@ -284,22 +263,23 @@ void SetVec<Data>::RemoveSuccessor(const Data& searchVal)
 template <typename Data>
 bool SetVec<Data>::Insert(const Data& val)
 {
-    if (Exists(val))
-        return false;
+    std::cout <<"insert chiamata su " << val << std::endl;
     Expand();
+
     ulong i = 0;
     try
     {
-        while (i < size && (*this)[i] < val)
-        {
-            i++;
-        }
+        i = Find(val);
+        if ((*this)[i] == val)
+            return false;
+
         MakeSpace(i);
     }
     catch (const std::out_of_range&)
     {
        ++tail %= elements.Size(); 
     }
+    
     elements[(head + i) % elements.Size()] = val;
     size++;
 
@@ -309,18 +289,22 @@ bool SetVec<Data>::Insert(const Data& val)
 template <typename Data>
 bool SetVec<Data>::Insert(Data&& val)
 {
-    if (Exists(val))
-        return false;
-    
     Expand();
 
     ulong i = 0;
-
-    while ((*this)[i] < val)
+    try
     {
-        i++;
+        i = Find(val);
+        if ((*this)[i] == val)
+            return false;
+            
+        MakeSpace(i);
     }
-    MakeSpace(i);
+    catch (const std::out_of_range&)
+    {
+       ++tail %= elements.Size(); 
+    }
+
     elements[(head + i) % elements.Size()] = std::move(val);
     size++;
     return true;
@@ -330,20 +314,13 @@ bool SetVec<Data>::Insert(Data&& val)
 template <typename Data>
 bool SetVec<Data>::Remove(const Data& searchVal)
 {
-    ulong i = 0;
-    while ((*this)[i] < searchVal)
-    {
-        i++;
-    }
-    if ((*this)[i] != searchVal)
+    ulong i = Find(searchVal);
+    if (size == 0 || (*this)[i] != searchVal)
         return false;
-    else
-    {
-        DeleteAt(i);
-        Reduce();
-        size--;
-        return true;
-    }
+    DeleteAt(i);
+    Reduce();
+    size--;
+    return true;
 }
 
 template <typename Data>
@@ -360,17 +337,9 @@ const Data& SetVec<Data>::operator[](const ulong i) const
 template <typename Data>
 bool SetVec<Data>::Exists(const Data& val) const noexcept
 {
-    ulong i = 0;
     try
     {
-        while ((*this)[i] < val)
-        {
-            i++;
-        }
-        if ((*this)[i] == val)
-            return true;
-        else
-            return false;
+        return ((*this)[Find(val)] == val ? true : false);
     }
     catch (const std::out_of_range&)
     {
@@ -391,24 +360,69 @@ inline void SetVec<Data>::Clear()
 template <typename Data>
 void SetVec<Data>::DeleteAt(ulong i)
 {
-    while (i < size - 1)
+    if (i < size / 2)
     {
-        elements[(head + i) % elements.Size()] = (*this)[i + 1];
-        i++;
+        while (i < size - 1)
+        {
+            elements[(head + i) % elements.Size()] = (*this)[i + 1];
+            i++;
+        }
+        tail = (tail + elements.Size() - 1) % elements.Size();
     }
-    tail = (tail - 1 + elements.Size()) % elements.Size();
+    else
+    {
+        while (i > 0)
+        {
+            elements[(head + i) % elements.Size()] = (*this)[i - 1];
+            i--;
+        }
+        ++head %= elements.Size();
+    }
 }
 
 template <typename Data>
-void SetVec<Data>::MakeSpace(ulong end)
+void SetVec<Data>::MakeSpace(ulong newSpace)
 {
-    ulong i = size - 1;
-    while (i >= end)
+    if (newSpace < size / 2)
     {
-        elements[(head + i + 1) % elements.Size()] = (*this)[i];
-        i--;
+        head = (head + elements.Size() - 1) % elements.Size();
+        for (ulong i = 0; i < newSpace; i++)
+        {
+            elements[(head + i) % elements.Size()] = (*this)[i + 1];
+        }
     }
-    ++tail %= elements.Size();
+    else
+    {
+        for (ulong i = size; i > newSpace; i--)
+        {
+            elements[(head + i) % elements.Size()] = (*this)[i - 1];
+        }
+        ++tail %= elements.Size();
+    }
+}
+
+template <typename Data>
+const ulong SetVec<Data>::Find(const Data& val) const
+{
+    if (size == 0)
+        return 0;
+
+    ulong left = 0;
+    ulong right = size;
+
+    while (left < right)
+    {
+        ulong mid = left + (right - left) / 2;
+        const Data& midVal = (*this)[mid];
+
+        if (midVal == val)
+            return mid;
+        else if (midVal < val)
+            left = mid + 1;
+        else
+            right = mid;
+    }
+    return left;
 }
 
 template <typename Data>
