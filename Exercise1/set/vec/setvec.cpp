@@ -263,7 +263,6 @@ void SetVec<Data>::RemoveSuccessor(const Data& searchVal)
 template <typename Data>
 bool SetVec<Data>::Insert(const Data& val)
 {
-    std::cout <<"insert chiamata su " << val << std::endl;
     Expand();
 
     ulong i = 0;
@@ -404,9 +403,6 @@ void SetVec<Data>::MakeSpace(ulong newSpace)
 template <typename Data>
 const ulong SetVec<Data>::Find(const Data& val) const
 {
-    if (size == 0)
-        return 0;
-
     ulong left = 0;
     ulong right = size;
 
@@ -443,7 +439,7 @@ template <typename Data>
 void SetVec<Data>::AuxResize(ulong newSize)
 {
     Vector<Data> tmpElements = Vector<Data>(newSize);
-    for (ulong i = head, j = 0; j < size; ++i %= elements.Size(), j++)
+    for (ulong i = head, j = 0; j < newSize; ++i %= elements.Size(), j++)
     {
         std::swap(elements[i], tmpElements[j]);
     }

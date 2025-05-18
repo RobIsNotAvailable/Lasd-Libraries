@@ -26,7 +26,7 @@ protected:
 public:
 
   // Default constructor
-  SetVec() {elements = Vector(4);}
+  SetVec() {elements = Vector<Data>(4);}
 
   /* ************************************************************************ */
 
@@ -38,7 +38,7 @@ public:
 
   // Copy constructor and Move constructor
   SetVec(const SetVec&);
-  SetVec(SetVec&& set) noexcept;
+  SetVec(SetVec&&) noexcept;
 
   /* ************************************************************************ */
 
