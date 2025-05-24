@@ -99,12 +99,6 @@ inline void MutableLinearContainer<Data>::PostOrderMap(MapFun fun)
 template <typename Data>
 void SortableLinearContainer<Data>::Sort() noexcept
 {
-    InsertionSort();
-}
-
-template <typename Data>
-void SortableLinearContainer<Data>::InsertionSort() noexcept
-{
     for (ulong i = 1; i < size; i++)
     {
         Data key = operator[](i);
@@ -117,4 +111,5 @@ void SortableLinearContainer<Data>::InsertionSort() noexcept
         operator[](j) = key;
     }
 }
+
 }

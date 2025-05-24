@@ -35,7 +35,7 @@ Vector<Data>::Vector(MappableContainer<Data>&& con) : Vector(con.Size())
     (
         [this, &i](Data& dat)
         {
-            Elements[i++] = std::move(dat);
+            std::swap(Elements[i++], dat);
         }
     );
 }
@@ -114,7 +114,7 @@ Data& Vector<Data>::operator[](const ulong i)
     if(i < size)
         return Elements[i];
     else
-        throw std::out_of_range("Access at index " + std::to_string(i) + "; vector size" + std::to_string(size));
+        throw std::out_of_range("Access at index " + std::to_string(i) + "; vector size " + std::to_string(size));
 }
 
 
@@ -147,7 +147,7 @@ const Data& Vector<Data>::operator[](const ulong i) const
     if(i < size)
         return Elements[i];
     else
-        throw std::out_of_range("Access at index " + std::to_string(i) + "; vector size" + std::to_string(size));
+        throw std::out_of_range("Access at index " + std::to_string(i) + "; vector size " + std::to_string(size));
 }
 
 

@@ -87,11 +87,11 @@ const Data& SetLst<Data>::Predecessor(const Data& searchVal) const
     if (size == 0 || searchVal <= head->element)
         throw std::length_error("Predecessor not found.");
 
-    typename List<Data>::Node* found = Find(searchVal);
-    if (found->element != searchVal)
+    Node* found = Find(searchVal);
+    if (found && found->element != searchVal)
         return found->element;
     
-    typename List<Data>::Node* prev = head;
+    Node* prev = head;
     while (prev->next != found)
     {
         prev = prev->next;
@@ -105,12 +105,12 @@ Data SetLst<Data>::PredecessorNRemove(const Data& searchVal)
     if (size == 0 || searchVal <= head->element)
         throw std::length_error("Predecessor not found.");
 
-    typename List<Data>::Node* found = Find(searchVal);
-    typename List<Data>::Node* prev = head;
+    Node* found = Find(searchVal);
+    Node* prev = head;
 
     if (found->element == searchVal)
     {
-        if (size == 2)
+        if (size <= 2)
             return List<Data>::FrontNRemove();
         while (prev->next->next != found)
         {
@@ -144,12 +144,12 @@ void SetLst<Data>::RemovePredecessor(const Data& searchVal)
     if (size == 0 || searchVal <= head->element)
         throw std::length_error("Predecessor not found.");
 
-    typename List<Data>::Node* found = Find(searchVal);
-    typename List<Data>::Node* prev = head;
+    Node* found = Find(searchVal);
+    Node* prev = head;
 
     if (found->element == searchVal)
     {
-        if (size == 2)
+        if (size <= 2)
             return List<Data>::RemoveFromFront();
         while (prev->next->next != found)
         {
@@ -181,7 +181,7 @@ const Data& SetLst<Data>::Successor(const Data& searchVal) const
     if (size == 0 || searchVal >= tail->element)
         throw std::length_error("Successor not found.");
     
-    typename List<Data>::Node* found = Find(searchVal);
+    Node* found = Find(searchVal);
     return (found ? found->next->element : head->element);
 }
 
@@ -191,11 +191,11 @@ Data SetLst<Data>::SuccessorNRemove(const Data& searchVal)
     if (size == 0 || searchVal >= tail->element)
         throw std::length_error("Successor not found.");
 
-    typename List<Data>::Node* found = Find(searchVal);
+    Node* found = Find(searchVal);
     if (!found)
         return List<Data>::FrontNRemove();
     
-    typename List<Data>::Node* succ = found->next;
+    Node* succ = found->next;
     if (succ == tail)
         return List<Data>::BackNRemove();
 
@@ -215,11 +215,11 @@ void SetLst<Data>::RemoveSuccessor(const Data& searchVal)
     if (size == 0 || searchVal >= tail->element)
         throw std::length_error("Successor not found.");
 
-    typename List<Data>::Node* found = Find(searchVal);
+    Node* found = Find(searchVal);
     if (!found)
         return List<Data>::RemoveFromFront();
     
-    typename List<Data>::Node* succ = found->next;
+    Node* succ = found->next;
     if (succ == tail)
         return List<Data>::RemoveFromBack();
     
@@ -236,7 +236,7 @@ void SetLst<Data>::RemoveSuccessor(const Data& searchVal)
 template <typename Data>
 bool SetLst<Data>::Insert(const Data& val)
 {
-    typename List<Data>::Node* found = Find(val);
+    Node* found = Find(val);
     if (found && found->element == val)
         return false;
     
@@ -246,7 +246,7 @@ bool SetLst<Data>::Insert(const Data& val)
         List<Data>::InsertAtBack(val);
     else
     {
-        typename List<Data>::Node* nuovo = new typename List<Data>::Node(val);
+        Node* nuovo = new Node(val);
         nuovo->next = found->next;
         found->next = nuovo;
         size++;
@@ -257,7 +257,7 @@ bool SetLst<Data>::Insert(const Data& val)
 template <typename Data>
 bool SetLst<Data>::Insert(Data&& val)
 {
-    typename List<Data>::Node* found = Find(val);
+    Node* found = Find(val);
     if (found && found->element == val)
         return false;
     
@@ -267,7 +267,7 @@ bool SetLst<Data>::Insert(Data&& val)
         List<Data>::InsertAtBack(std::move(val));
     else
     {
-        typename List<Data>::Node* nuovo = new typename List<Data>::Node(val);
+        Node* nuovo = new Node(val);
         nuovo->next = found->next;
         found->next = nuovo;
         size++;
@@ -278,7 +278,7 @@ bool SetLst<Data>::Insert(Data&& val)
 template <typename Data>
 bool SetLst<Data>::Remove(const Data& val)
 {
-    typename List<Data>::Node* found = Find(val);
+    Node* found = Find(val);
     if (!found || found->element != val)
         return false;
     
@@ -288,7 +288,7 @@ bool SetLst<Data>::Remove(const Data& val)
         List<Data>::RemoveFromBack();
     else
     {
-        typename List<Data>::Node* prev = head;
+        Node* prev = head;
         while (prev->next != found)
         {
             prev = prev->next;
@@ -309,7 +309,7 @@ bool SetLst<Data>::Remove(const Data& val)
 template <typename Data>
 bool SetLst<Data>::Exists(const Data& val) const noexcept
 {
-    typename List<Data>::Node* found = Find(val);
+    Node* found = Find(val);
     if (!found || found->element != val)
         return false;
     return true;
@@ -319,17 +319,17 @@ bool SetLst<Data>::Exists(const Data& val) const noexcept
 
 
 template <typename Data>
-typename List<Data>::Node* SetLst<Data>::Find(const Data& val) const
+SetLst<Data>::Node* SetLst<Data>::Find(const Data& val) const
 {
-    typename List<Data>::Node* left = head;
-    typename List<Data>::Node* curr = nullptr;
+    Node* left = head;
+    Node* curr = nullptr;
 
     ulong length = size;
 
     while (length > 0) 
     {
         ulong steps = length / 2;
-        typename List<Data>::Node* mid = left;
+        Node* mid = left;
 
         for (ulong i = 0; i < steps; ++i) 
         {

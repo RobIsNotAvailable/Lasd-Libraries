@@ -40,7 +40,7 @@ class Container
     // Specific member functions
     virtual inline bool Empty() const noexcept
     {
-      return(size==0);
+      return(size == 0);
     }
 
     virtual inline ulong Size() const noexcept

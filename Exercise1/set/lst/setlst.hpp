@@ -20,7 +20,7 @@ class SetLst : virtual public Set<Data>, virtual protected List<Data>
 protected:
 
   using Container::size;
-  using List<Data>::Node;
+  using typename List<Data>::Node;
   using List<Data>::head;
   using List<Data>::tail;
 

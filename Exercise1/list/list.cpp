@@ -277,14 +277,22 @@ void List<Data>::RemoveFromBack()
     if (size == 0)
         throw std::length_error("Access to an empty list");
 
-    Node* temp = head;
-    while (temp->next != tail)
+    if (head == tail) 
     {
-        temp = temp->next;
+        delete tail;
+        head = tail = nullptr;
     }
-    delete tail;
-    tail = temp;
-    temp->next = nullptr;
+    else
+    {
+        Node* prev = head;
+        while (prev->next != tail)
+        {
+            prev = prev->next;
+        }
+        delete tail;
+        tail = prev;
+        tail->next = nullptr;
+    }
     size--;
 }
 
@@ -295,17 +303,25 @@ Data List<Data>::BackNRemove()
     if (size == 0)
         throw std::length_error("Access to an empty list");
     
-    Node* temp = head;
-    while (temp->next != tail)
-    {
-        temp = temp->next;
-    }
     Data val = std::move(tail->element);
-    delete tail;
-    tail = temp;
-    temp->next = nullptr;
+    if (head == tail) 
+    {
+        delete tail;
+        head = tail = nullptr;
+    }
+    else
+    {
+        Node* prev = head;
+        while (prev->next != tail)
+        {
+            prev = prev->next;
+        }
+        delete tail;
+        tail = prev;
+        tail->next = nullptr;
+    }
     size--;
-    return val;  
+    return val;
 }
 
 /* ************************************************************************** */
