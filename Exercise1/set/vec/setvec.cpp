@@ -19,12 +19,12 @@ SetVec<Data>::SetVec(const TraversableContainer<Data>& con)
 template <typename Data>
 SetVec<Data>::SetVec(MappableContainer<Data>&& con)
 {
-    elements = Vector(con.Size());
+    elements = Vector<Data>(con.Size());
     con.Map
     (
-        [this](Data&& dat)
+        [this](Data& dat)
         {
-            Insert(dat);
+            Insert(std::move(dat));
         }
     );
 }
@@ -328,7 +328,7 @@ const Data& SetVec<Data>::operator[](const ulong i) const
         return elements[(head + i) % elements.Size()];
     }
     else
-        throw std::out_of_range("Access at index " + std::to_string(i) + "; set size" + std::to_string(size));   
+        throw std::out_of_range("Access at index " + std::to_string(i) + "; set size " + std::to_string(size));   
 }
 
 template <typename Data>

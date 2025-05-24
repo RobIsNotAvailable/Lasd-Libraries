@@ -23,12 +23,16 @@ bool LinearContainer<Data>::operator == (const LinearContainer<Data>& dat) const
 template <typename Data>
 inline const Data& LinearContainer<Data>::Front() const 
 {
+    if (size == 0)
+        throw std::length_error("The container is empty.");
     return operator[](0);
 }
 
 template <typename Data>
 inline const Data& LinearContainer<Data>::Back() const 
 {
+    if (size == 0)
+        throw std::length_error("The container is empty.");
     return operator[](size - 1);
 }
 

@@ -9,25 +9,28 @@ using namespace std;
 
 namespace daje
 {
-
-    void ListEdgeCases(uint& testnum, uint& testerr, lasd::List<int> lst)
-    {
+    void ListEdgeCases(uint& testnum, uint& testerr, lasd::List<int> lst) // ensures that the different functions work with few elements  
+    {                                                                     // and keep the list serviceable after removing the last element in different ways
         uint loctestnum = 0, loctesterr = 0;
-        lst.Clear();
-        InsertAtFront(loctestnum, loctesterr, lst, true, 4); // inserting values after clearing the list in different ways
+
+        EmptyContainerTest(loctestnum, loctesterr, lst);
+
+        InsertAtFront(loctestnum, loctesterr, lst, true, 4);
         InsertAtFront(loctestnum, loctesterr, lst, true, 3);
         InsertAtBack(loctestnum, loctesterr, lst, true, 7);
 
-        lst.RemoveFromFront();
-        lst.RemoveFromFront();
-        lst.RemoveFromFront();
+        RemoveFromFront(loctestnum, loctesterr, lst, true);
+        RemoveFromFront(loctestnum, loctesterr, lst, true);
+        RemoveFromFront(loctestnum, loctesterr, lst, true);
+        EmptyContainerTest(loctestnum, loctesterr, lst);
         InsertAtFront(loctestnum, loctesterr, lst, true, 4); // clearing with removefromfront
         InsertAtFront(loctestnum, loctesterr, lst, true, 3);
         InsertAtBack(loctestnum, loctesterr, lst, true, 7);
 
-        lst.RemoveFromBack();
-        lst.RemoveFromBack();
-        lst.RemoveFromBack();
+        RemoveFromBack(loctestnum, loctesterr, lst, true);
+        RemoveFromBack(loctestnum, loctesterr, lst, true);
+        RemoveFromBack(loctestnum, loctesterr, lst, true);
+        EmptyContainerTest(loctestnum, loctesterr, lst);
         InsertAtFront(loctestnum, loctesterr, lst, true, 4); // clearing with removefromback
         InsertAtFront(loctestnum, loctesterr, lst, true, 3);
         InsertAtBack(loctestnum, loctesterr, lst, true, 7);
@@ -35,6 +38,7 @@ namespace daje
         BackNRemove(loctestnum, loctesterr, lst, true, 7);
         BackNRemove(loctestnum, loctesterr, lst, true, 4);
         BackNRemove(loctestnum, loctesterr, lst, true, 3);
+        EmptyContainerTest(loctestnum, loctesterr, lst);
         InsertAtFront(loctestnum, loctesterr, lst, true, 4); // clearing with backnremove
         InsertAtFront(loctestnum, loctesterr, lst, true, 3);
         InsertAtBack(loctestnum, loctesterr, lst, true, 7);
@@ -42,7 +46,14 @@ namespace daje
         FrontNRemove(loctestnum, loctesterr, lst, true, 3);
         FrontNRemove(loctestnum, loctesterr, lst, true, 4);
         FrontNRemove(loctestnum, loctesterr, lst, true, 7);
+        EmptyContainerTest(loctestnum, loctesterr, lst);
         InsertAtFront(loctestnum, loctesterr, lst, true, 4);// clearing with frontnremove
+        InsertAtFront(loctestnum, loctesterr, lst, true, 3);
+        InsertAtBack(loctestnum, loctesterr, lst, true, 7);
+
+        lst.Clear();
+        EmptyContainerTest(loctestnum, loctesterr, lst);
+        InsertAtFront(loctestnum, loctesterr, lst, true, 4);// clearing with clear
         InsertAtFront(loctestnum, loctesterr, lst, true, 3);
         InsertAtBack(loctestnum, loctesterr, lst, true, 7);
 
@@ -141,51 +152,33 @@ namespace daje
         cout << endl << "Begin of myList<int> Test:" << endl; 
         try 
         {
-            {
-                cout << endl << "List: testing different kind of empty lists" << endl;
+            lasd::List<int> lst;
+            cout << endl << "List<int>: testing different kind of empty lists" << endl;
+            ListEdgeCases(loctestnum, loctesterr, lst);
 
-                lasd::List<int> lst;
-                EmptyContainerTest(loctestnum, loctesterr, lst);
+            lst = lasd::List<int>();
+            InsertAtBack(loctestnum, loctesterr, lst, true, 4);
+            InsertAtBack(loctestnum, loctesterr, lst, true, 3);
+            InsertAtBack(loctestnum, loctesterr, lst, true, 0);
+            InsertAtBack(loctestnum, loctesterr, lst, true, 4);
+            InsertAtBack(loctestnum, loctesterr, lst, true, -6);
 
-                lst.InsertAtFront(7);
-                lst.RemoveFromFront();
-                EmptyContainerTest(loctestnum, loctesterr, lst);
+            cout << endl << "List<int>: testing generic functions" << endl;
+            ContainerIntTest(loctestnum, loctesterr, lst);
 
-                lst.InsertAtFront(7);
-                lst.RemoveFromBack();
-                EmptyContainerTest(loctestnum, loctesterr, lst);
+            cout << endl << "List<int>: testing Copy and Move assignments and constructors" << endl;
+            CopyAndMoveListTest(loctestnum, loctesterr, lst);
 
-                lst.InsertAtFront(7);
-                lst.InsertAtBack(8);
-                lst.Clear();
-                EmptyContainerTest(loctestnum, loctesterr, lst);
-            }
-            {
-                lasd::List<int> lst;
-                InsertAtBack(loctestnum, loctesterr, lst, true, 4);
-                InsertAtBack(loctestnum, loctesterr, lst, true, 3);
-                InsertAtBack(loctestnum, loctesterr, lst, true, 0);
-                InsertAtBack(loctestnum, loctesterr, lst, true, 4);
-                InsertAtBack(loctestnum, loctesterr, lst, true, -6);
+            cout << endl << "List<int>: testing constructors from containers" << endl;
+            ContainerConstructorListIntTest(loctestnum, loctesterr);
 
-                cout << endl << "List<int>: testing generic functions and edge cases" << endl;
-                ContainerIntTest(loctestnum, loctesterr, lst);
-                ListEdgeCases(loctestnum, loctesterr, lst);
-
-                cout << endl << "List<int>: testing Copy and Move assignments and constructors" << endl;
-                CopyAndMoveListTest(loctestnum, loctesterr, lst);
-
-                cout << endl << "List<int>: testing constructors from containers" << endl;
-                ContainerConstructorListIntTest(loctestnum, loctesterr);
-
-                cout << endl << "List<int>: testing traverse, fold and map functions" << endl;
-                TraverseAndFriendsIntTest(loctestnum, loctesterr, lst);
-            }
+            cout << endl << "List<int>: testing traverse, fold and map functions" << endl;
+            TraverseAndFriendsIntTest(loctestnum, loctesterr, lst);
         }
         catch (...)
         {
-        loctestnum++; loctesterr++;
-        cout << endl << "Unmanaged error! " << endl;
+            loctestnum++; loctesterr++;
+            cout << endl << "Unmanaged error! " << endl;
         }
         cout << "End of myList<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
         testnum += loctestnum;
@@ -198,32 +191,30 @@ namespace daje
         cout << endl << "Begin of myList<string> Test:" << endl; 
         try 
         {
-            {
-                lasd::List<string> lst;
-                
-                InsertAtBack(loctestnum, loctesterr, lst, true, string("C"));
-                InsertAtBack(loctestnum, loctesterr, lst, true, string("D"));
-                InsertAtBack(loctestnum, loctesterr, lst, true, string("A"));
-                InsertAtBack(loctestnum, loctesterr, lst, true, string("B"));
-                InsertAtBack(loctestnum, loctesterr, lst, true, string("E"));
+            lasd::List<string> lst;
+            
+            InsertAtBack(loctestnum, loctesterr, lst, true, string("C"));
+            InsertAtBack(loctestnum, loctesterr, lst, true, string("D"));
+            InsertAtBack(loctestnum, loctesterr, lst, true, string("A"));
+            InsertAtBack(loctestnum, loctesterr, lst, true, string("B"));
+            InsertAtBack(loctestnum, loctesterr, lst, true, string("E"));
 
-                cout << endl << "List<string>: testing generic functions" << endl;
-                ContainerStringTest(loctestnum, loctesterr, lst);
+            cout << endl << "List<string>: testing generic functions" << endl;
+            ContainerStringTest(loctestnum, loctesterr, lst);
 
-                cout << endl << "List<string>: testing Copy and Move assignments and constructors" << endl;
-                CopyAndMoveListTest(loctestnum, loctesterr, lst);
+            cout << endl << "List<string>: testing Copy and Move assignments and constructors" << endl;
+            CopyAndMoveListTest(loctestnum, loctesterr, lst);
 
-                cout << endl << "List<string>: testing constructors from containers" << endl;
-                ContainerConstructorListStringTest(loctestnum, loctesterr);
+            cout << endl << "List<string>: testing constructors from containers" << endl;
+            ContainerConstructorListStringTest(loctestnum, loctesterr);
 
-                cout << endl << "List<string>: testing traverse and fold functions" << endl;
-                TraverseAndFriendsStringTest(loctestnum, loctesterr, lst);
-            }
+            cout << endl << "List<string>: testing traverse and fold functions" << endl;
+            TraverseAndFriendsStringTest(loctestnum, loctesterr, lst);
         }
         catch (...)
         {
-        loctestnum++; loctesterr++;
-        cout << endl << "Unmanaged error! " << endl;
+            loctestnum++; loctesterr++;
+            cout << endl << "Unmanaged error! " << endl;
         }
         cout << "End of myList<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
         testnum += loctestnum;

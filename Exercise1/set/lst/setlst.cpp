@@ -20,9 +20,9 @@ SetLst<Data>::SetLst(MappableContainer<Data>&& con)
 {
     con.Map
     (
-        [this](const Data& dat)
+        [this](Data& dat)
         {
-            Insert(dat);
+            Insert(std::move(dat));
         }
     );
 }

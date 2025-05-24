@@ -17,13 +17,12 @@
 #include "../../container/traversable.hpp"
 
 #include "../../vector/vector.hpp"
-#include <string>
 
 using namespace std;
 
 namespace daje
 { 
-    void EmptyContainerTest(uint& testnum, uint& testerr, lasd::MutableLinearContainer<int>& con)
+    void EmptyContainerTest(uint& testnum, uint& testerr, lasd::LinearContainer<int>& con)
     {
         uint loctestnum = 0, loctesterr = 0;
 
@@ -68,6 +67,20 @@ namespace daje
         {
             GetAt(loctestnum, loctesterr, con, true, i, copvec[i] + 2);
         }
+
+        testnum += loctestnum;
+        testerr += loctesterr;
+    }
+
+    void TraverseAndFriendsIntTest(uint& testnum, uint& testerr, lasd::LinearContainer<int>& con)
+    {
+        uint loctestnum = 0, loctesterr = 0;
+
+        TraversePreOrder(loctestnum, loctesterr, con, true, &TraversePrint<int>);
+        TraversePostOrder(loctestnum, loctesterr, con, true, &TraversePrint<int>); // traverse functions
+
+        FoldPreOrder(loctestnum, loctesterr, con, true, &FoldAdd<int>, 0, 5);
+        FoldPostOrder(loctestnum, loctesterr, con, true, &FoldAdd<int>, 0, 5); // fold functions
 
         testnum += loctestnum;
         testerr += loctesterr;
@@ -126,7 +139,19 @@ namespace daje
         FoldPreOrder(loctestnum, loctesterr, con, true, &FoldStringConcatenate, string("inizio "), string("inizio CDABE"));
         FoldPostOrder(loctestnum, loctesterr, con, true, &FoldStringConcatenate, string("inizio "), string("inizio EBADC")); // fold functions
 
-        lasd::Vector<string> copvec(con);
+        testnum += loctestnum;
+        testerr += loctesterr;
+    }
+
+    void TraverseAndFriendsStringTest(uint& testnum, uint& testerr, lasd::LinearContainer<string>& con)
+    {
+        uint loctestnum = 0, loctesterr = 0;
+
+        TraversePreOrder(loctestnum, loctesterr, con, true, &TraversePrint<string>);
+        TraversePostOrder(loctestnum, loctesterr, con, true, &TraversePrint<string>); // traverse functions
+
+        FoldPreOrder(loctestnum, loctesterr, con, true, &FoldStringConcatenate, string("inizio "), string("inizio ABDJTY"));
+        FoldPostOrder(loctestnum, loctesterr, con, true, &FoldStringConcatenate, string("inizio "), string("inizio YTJDBA")); // fold functions
 
         testnum += loctestnum;
         testerr += loctesterr;

@@ -26,6 +26,7 @@
 
 #include "./specificTests/list.hpp"
 #include "./specificTests/vector.hpp"
+#include "./specificTests/set.hpp"
 #include "./test.hpp"
 
 using namespace std;
@@ -46,11 +47,11 @@ void mytest()
   stestnum += loctestnum; stesterr += loctesterr;
 
   loctestnum = 0; loctesterr = 0;
-  daje::myListIntTest(loctestnum, loctesterr);
+  daje::mySetIntTest(loctestnum, loctesterr);
   stestnum += loctestnum; stesterr += loctesterr;
 
   loctestnum = 0; loctesterr = 0;
-  daje::myListStringTest(loctestnum, loctesterr);
+  daje::mySetStringTest(loctestnum, loctesterr);
   stestnum += loctestnum; stesterr += loctesterr;
 
   cout << endl << "Exercise 1 (Student's Test) (Errors/Tests: " << stesterr << "/" << stestnum << ")" << endl;

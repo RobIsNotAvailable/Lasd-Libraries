@@ -94,49 +94,46 @@ namespace daje
     cout << endl << "Begin of myVector<int> Test:" << endl;
     try 
     {
-      {
-        cout << endl << "Vector<int>: testing different kind of empty vectors" << endl;
+      cout << endl << "Vector<int>: testing different kind of empty vectors" << endl;
 
-        lasd::SortableVector<int> vec;
-        EmptyContainerTest(loctestnum, loctesterr, vec);
+      lasd::SortableVector<int> vec;
+      EmptyContainerTest(loctestnum, loctesterr, vec);
 
-        vec = lasd::SortableVector<int>(0);
-        EmptyContainerTest(loctestnum, loctesterr, vec);
+      vec = lasd::SortableVector<int>(0);
+      EmptyContainerTest(loctestnum, loctesterr, vec);
 
-        vec = lasd::SortableVector<int>(7);
-        vec.Resize(0);
-        EmptyContainerTest(loctestnum, loctesterr, vec);
+      vec = lasd::SortableVector<int>(7);
+      vec.Resize(0);
+      EmptyContainerTest(loctestnum, loctesterr, vec);
 
-        vec = lasd::SortableVector<int>(7);
-        vec.Clear();
-        EmptyContainerTest(loctestnum, loctesterr, vec);
+      vec = lasd::SortableVector<int>(7);
+      vec.Clear();
+      EmptyContainerTest(loctestnum, loctesterr, vec);
 
-        vec.Sort();
-      }
-      {
-        lasd::SortableVector<int> vec(5);
+      vec.Sort();
 
-        SetAt(loctestnum, loctesterr, vec, true, 0, 4);
-        SetAt(loctestnum, loctesterr, vec, true, 1, 3);
-        SetAt(loctestnum, loctesterr, vec, true, 2, 0);
-        SetAt(loctestnum, loctesterr, vec, true, 3, 4);
-        SetAt(loctestnum, loctesterr, vec, true, 4, -6);
+      vec = lasd::SortableVector<int>(5);
 
-        cout << endl << "Vector<int>: testing generic functions and edge cases" << endl;
-        ContainerIntTest(loctestnum, loctesterr, vec);
+      SetAt(loctestnum, loctesterr, vec, true, 0, 4);
+      SetAt(loctestnum, loctesterr, vec, true, 1, 3);
+      SetAt(loctestnum, loctesterr, vec, true, 2, 0);
+      SetAt(loctestnum, loctesterr, vec, true, 3, 4);
+      SetAt(loctestnum, loctesterr, vec, true, 4, -6);
 
-        cout << endl << "Vector<int>: testing Copy and Move assignments and constructors" << endl;
-        CopyAndMoveVectorTest(loctestnum, loctesterr, vec);
+      cout << endl << "Vector<int>: testing generic functions and edge cases" << endl;
+      ContainerIntTest(loctestnum, loctesterr, vec);
 
-        cout << endl << "Vector<int>: testing constructors from containers" << endl;
-        ContainerConstructorVectorIntTest(loctestnum, loctesterr);
+      cout << endl << "Vector<int>: testing Copy and Move assignments and constructors" << endl;
+      CopyAndMoveVectorTest(loctestnum, loctesterr, vec);
 
-        cout << endl << "Vector<int>: testing traverse, fold and map functions" << endl;
-        TraverseAndFriendsIntTest(loctestnum, loctesterr, vec);
+      cout << endl << "Vector<int>: testing constructors from containers" << endl;
+      ContainerConstructorVectorIntTest(loctestnum, loctesterr);
 
-        cout << endl << "Vector<int>: testing sort function" << endl;
-        SortIntTest(loctestnum, loctesterr, vec);
-      }
+      cout << endl << "Vector<int>: testing traverse, fold and map functions" << endl;
+      TraverseAndFriendsIntTest(loctestnum, loctesterr, vec);
+
+      cout << endl << "Vector<int>: testing sort function" << endl;
+      SortIntTest(loctestnum, loctesterr, vec);
     }
     catch (...)
     {
@@ -154,7 +151,6 @@ namespace daje
     cout << endl << "Begin of myVector<string> Test:" << endl;
     try 
     {
-      {
         lasd::SortableVector<string> vec(5);
 
         SetAt(loctestnum, loctesterr, vec, true, 0, string("C"));
@@ -177,7 +173,6 @@ namespace daje
 
         cout << endl << "Vector<string>: testing sort function" << endl;
         SortStringTest(loctestnum, loctesterr, vec);
-      }
     }
     catch (...)
     {
