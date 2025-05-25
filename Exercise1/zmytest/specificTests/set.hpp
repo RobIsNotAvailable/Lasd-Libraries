@@ -208,8 +208,10 @@ namespace daje
 
         Exists(loctestnum, loctesterr, set, true, -6);//searching for existing value
         Exists(loctestnum, loctesterr, set, false, -4);//searching for non existing value
-        TraversePreOrder(loctestnum, loctesterr, set, true, &TraversePrint<int>);
-        Remove(loctestnum, loctesterr, set, false, 100); //remove non existing value (remove existing value already tested)
+
+        Remove(loctestnum, loctesterr, set, true, -6);
+        Remove(loctestnum, loctesterr, set, true, 7);
+        Remove(loctestnum, loctesterr, set, false, 100);
 
         testnum += loctestnum;
         testerr += loctesterr;
@@ -314,6 +316,8 @@ namespace daje
     {
         uint loctestnum = 0, loctesterr = 0; 
 
+        Reset(set);
+        
         Predecessor(loctestnum, loctesterr, set, false, -8, 1);        //predecessor di testa in tre varianti
         RemovePredecessor(loctestnum, loctesterr, set, false, -8);
         PredecessorNRemove(loctestnum, loctesterr, set, false, -8, 1);

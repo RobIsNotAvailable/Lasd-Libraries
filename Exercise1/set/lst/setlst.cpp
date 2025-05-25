@@ -282,7 +282,7 @@ bool SetLst<Data>::Remove(const Data& val)
     if (!found || found->element != val)
         return false;
     
-    if (found == nullptr)
+    if (found == head)
         List<Data>::RemoveFromFront();
     else if (found == tail)
         List<Data>::RemoveFromBack();
