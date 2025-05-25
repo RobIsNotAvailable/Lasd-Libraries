@@ -267,7 +267,7 @@ bool SetLst<Data>::Insert(Data&& val)
         List<Data>::InsertAtBack(std::move(val));
     else
     {
-        Node* nuovo = new Node(val);
+        Node* nuovo = new Node(std::move(val));
         nuovo->next = found->next;
         found->next = nuovo;
         size++;
