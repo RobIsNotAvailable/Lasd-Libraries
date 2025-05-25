@@ -110,7 +110,7 @@ Data SetLst<Data>::PredecessorNRemove(const Data& searchVal)
 
     if (found->element == searchVal)
     {
-        if (size <= 2)
+        if (head->next == found)
             return List<Data>::FrontNRemove();
         while (prev->next->next != found)
         {
@@ -149,7 +149,7 @@ void SetLst<Data>::RemovePredecessor(const Data& searchVal)
 
     if (found->element == searchVal)
     {
-        if (size <= 2)
+        if (head->next == found)
             return List<Data>::RemoveFromFront();
         while (prev->next->next != found)
         {

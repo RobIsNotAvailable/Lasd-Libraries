@@ -51,6 +51,10 @@ namespace daje
         SuccessorNRemove(loctestnum, loctesterr, set, true, 5, 8);
         EmptyContainerTest(loctestnum, loctesterr, set); // emptied with succ n remove
 
+        InsertC(loctestnum, loctesterr, set, 34);
+        Remove(loctestnum, loctesterr, set, true, 34);
+        EmptyContainerTest(loctestnum, loctesterr, set); // emptied with remove
+
         InsertC(loctestnum, loctesterr, set, 7);
         InsertC(loctestnum, loctesterr, set, 8);
         set.Clear();
@@ -204,6 +208,8 @@ namespace daje
 
         Exists(loctestnum, loctesterr, set, true, -6);//searching for existing value
         Exists(loctestnum, loctesterr, set, false, -4);//searching for non existing value
+        TraversePreOrder(loctestnum, loctesterr, set, true, &TraversePrint<int>);
+        Remove(loctestnum, loctesterr, set, false, 100); //remove non existing value (remove existing value already tested)
 
         testnum += loctestnum;
         testerr += loctesterr;
@@ -291,6 +297,52 @@ namespace daje
         testnum += loctestnum;
         testerr += loctesterr;
     }
+    
+    void Reset(lasd::Set<int>& set)
+    {
+        set.Clear();
+        set.Insert(4);
+        set.Insert(3);
+        set.Insert(0);
+        set.Insert(4);
+        set.Insert(-6);
+        set.Insert(7);
+        set.Insert(-3);
+    }
+
+    void SetPredecessorSuccessorTest(uint& testnum, uint& testerr, lasd::Set<int>& set)
+    {
+        uint loctestnum = 0, loctesterr = 0; 
+
+        Predecessor(loctestnum, loctesterr, set, false, -8, 1);        //predecessor di testa in tre varianti
+        RemovePredecessor(loctestnum, loctesterr, set, false, -8);
+        PredecessorNRemove(loctestnum, loctesterr, set, false, -8, 1);
+
+        Successor(loctestnum, loctesterr, set, false, 50, 1);        //successor di coda in tre varianti
+        RemoveSuccessor(loctestnum, loctesterr, set, false, 50);
+        SuccessorNRemove(loctestnum, loctesterr, set, false, 50, 1);
+        
+        Predecessor(loctestnum, loctesterr, set, true, 0, -3);        //predecessor di un presente di tre varianti
+        RemovePredecessor(loctestnum, loctesterr, set, true, 0);
+        PredecessorNRemove(loctestnum, loctesterr, set, true, 0, -6);
+
+        Successor(loctestnum, loctesterr, set, true, 0, 3);        //successor di un presente di tre varianti
+        RemoveSuccessor(loctestnum, loctesterr, set, true, 0);
+        SuccessorNRemove(loctestnum, loctesterr, set, true, 0, 4);
+        
+        Reset(set);       
+
+        Predecessor(loctestnum, loctesterr, set, true, -1, -3);        //predecessor di un assente di tre varianti
+        RemovePredecessor(loctestnum, loctesterr, set, true, -1);
+        PredecessorNRemove(loctestnum, loctesterr, set, true, -1, -6);
+
+        Successor(loctestnum, loctesterr, set, true, 1, 3);        //successor di un assente di tre varianti
+        RemoveSuccessor(loctestnum, loctesterr, set, true, 1);
+        SuccessorNRemove(loctestnum, loctesterr, set, true, 1, 4);
+
+        testnum += loctestnum;
+        testerr += loctesterr;
+    }
 
     void SetPopulate(uint& testnum, uint& testerr, lasd::Set<int>& set)
     {
@@ -338,7 +390,11 @@ namespace daje
             SetPopulate(loctestnum, loctesterr, set);
             SetContentIntTest(loctestnum, loctesterr, set);
 
+            cout << endl << "Set<int>: testing predecessor, successor and variants" << endl;
+            SetPredecessorSuccessorTest(loctestnum, loctesterr, set);
+
             cout << endl << "Set<int>: testing traverse, fold and map functions" << endl;
+            Reset(set);
             TraverseAndFriendsIntTest(loctestnum, loctesterr, set);
         }
         catch (...)

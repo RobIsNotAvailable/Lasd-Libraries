@@ -369,7 +369,7 @@ template <typename Data>
 const Data& List<Data>::operator[](const ulong index) const
 {
     if(index >= size)
-        throw std::out_of_range("Access at index " + std::to_string(index));
+        throw std::out_of_range("Access at index " + std::to_string(index) + "; list size " + std::to_string(size));  
     
     Node* curr = head;
     for(ulong i = 0; i < index; i++)

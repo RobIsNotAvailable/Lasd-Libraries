@@ -312,7 +312,7 @@ template <typename Data>
 bool SetVec<Data>::Remove(const Data& searchVal)
 {
     ulong i = Find(searchVal);
-    if (size == 0 || (*this)[i] != searchVal)
+    if (size == 0 || size <= i || (*this)[i] != searchVal)
         return false;
     DeleteAt(i);
     Reduce();
