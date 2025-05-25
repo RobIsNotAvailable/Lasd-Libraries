@@ -47,6 +47,14 @@ void mytest()
   stestnum += loctestnum; stesterr += loctesterr;
 
   loctestnum = 0; loctesterr = 0;
+  daje::myListIntTest(loctestnum, loctesterr);
+  stestnum += loctestnum; stesterr += loctesterr;
+
+  loctestnum = 0; loctesterr = 0;
+  daje::myListStringTest(loctestnum, loctesterr);
+  stestnum += loctestnum; stesterr += loctesterr;
+
+  loctestnum = 0; loctesterr = 0;
   daje::mySetIntTest(loctestnum, loctesterr);
   stestnum += loctestnum; stesterr += loctesterr;
 
