@@ -302,7 +302,7 @@ bool SetVec<Data>::Insert(Data&& val)
        ++tail %= elements.Size(); 
     }
 
-    elements[(head + i) % elements.Size()] = std::move(val);
+    std::swap (elements[(head + i) % elements.Size()], val);
     size++;
     return true;
 
