@@ -31,7 +31,7 @@ class Vector : virtual public MutableLinearContainer<Data>, public ResizableCont
     // Specific constructors
     Vector(const ulong); // A vector with a given initial dimension
     Vector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-    Vector(MappableContainer<Data>&&); // A vector obtained from a MappableContainer
+    Vector(MappableContainer<Data>&&) noexcept; // A vector obtained from a MappableContainer
 
     /* ************************************************************************ */
 

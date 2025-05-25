@@ -16,7 +16,7 @@ SetLst<Data>::SetLst(const TraversableContainer<Data>& con)
 }
 
 template <typename Data>
-SetLst<Data>::SetLst(MappableContainer<Data>&& con)
+SetLst<Data>::SetLst(MappableContainer<Data>&& con) noexcept
 {
     con.Map
     (

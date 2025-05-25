@@ -28,7 +28,7 @@ Vector<Data>::Vector(const TraversableContainer<Data>& con) : Vector(con.Size())
 
 
 template <typename Data>
-Vector<Data>::Vector(MappableContainer<Data>&& con) : Vector(con.Size())
+Vector<Data>::Vector(MappableContainer<Data>&& con) : Vector(con.Size()) noexcept
 {
     ulong i = 0;
     con.Map

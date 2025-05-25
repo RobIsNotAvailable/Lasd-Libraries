@@ -17,7 +17,7 @@ SetVec<Data>::SetVec(const TraversableContainer<Data>& con)
 }
 
 template <typename Data>
-SetVec<Data>::SetVec(MappableContainer<Data>&& con)
+SetVec<Data>::SetVec(MappableContainer<Data>&& con) noexcept
 {
     elements = Vector<Data>(con.Size());
     con.Map

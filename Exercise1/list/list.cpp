@@ -69,7 +69,7 @@ List <Data>::List(const TraversableContainer<Data>& con)
 }
 
 template <typename Data>
-List <Data>::List(MappableContainer<Data>&& con)
+List <Data>::List(MappableContainer<Data>&& con) noexcept
 {
     con.Map
     (

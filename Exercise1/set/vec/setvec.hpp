@@ -32,7 +32,7 @@ public:
 
   // Specific constructors
   SetVec(const TraversableContainer<Data>&); // A set obtained from a TraversableContainer
-  SetVec(MappableContainer<Data>&&); // A set obtained from a MappableContainer
+  SetVec(MappableContainer<Data>&&) noexcept; // A set obtained from a MappableContainer
 
   /* ************************************************************************ */
 
