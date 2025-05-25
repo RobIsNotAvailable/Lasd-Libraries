@@ -38,7 +38,7 @@ SetVec<Data>::SetVec(const SetVec& set)
 {
     head = set.head;
     tail = set.tail;
-    elements = Vector(set);
+    elements = set.elements;
     size = set.size;
 }
 
@@ -357,44 +357,46 @@ inline void SetVec<Data>::Clear()
 template <typename Data>
 void SetVec<Data>::DeleteAt(ulong i)
 {
+    ulong elementsSize = elements.Size();
     if (i < size / 2)
     {
         while (i < size - 1)
         {
-            elements[(head + i) % elements.Size()] = (*this)[i + 1];
+            elements[(head + i) % elementsSize] = (*this)[i + 1];
             i++;
         }
-        tail = (tail + elements.Size() - 1) % elements.Size();
+        tail = (tail + elementsSize - 1) % elementsSize;
     }
     else
     {
         while (i > 0)
         {
-            elements[(head + i) % elements.Size()] = (*this)[i - 1];
+            elements[(head + i) % elementsSize] = (*this)[i - 1];
             i--;
         }
-        ++head %= elements.Size();
+        ++head %= elementsSize;
     }
 }
 
 template <typename Data>
 void SetVec<Data>::MakeSpace(ulong newSpace)
 {
+    ulong elementsSize = elements.Size();
     if (newSpace < size / 2)
     {
-        head = (head + elements.Size() - 1) % elements.Size();
+        head = (head + elementsSize - 1) % elementsSize;
         for (ulong i = 0; i < newSpace; i++)
         {
-            elements[(head + i) % elements.Size()] = (*this)[i + 1];
+            elements[(head + i) % elementsSize] = (*this)[i + 1];
         }
     }
     else
     {
         for (ulong i = size; i > newSpace; i--)
         {
-            elements[(head + i) % elements.Size()] = (*this)[i - 1];
+            elements[(head + i) % elementsSize] = (*this)[i - 1];
         }
-        ++tail %= elements.Size();
+        ++tail %= elementsSize;
     }
 }
 
