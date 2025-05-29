@@ -113,7 +113,7 @@ class SortableVector : virtual public Vector<Data>, virtual public SortableLinea
     // Specific constructors
     SortableVector(const ulong); // A vector with a given initial dimension
     SortableVector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-    SortableVector(MappableContainer<Data>&&); // A vector obtained from a MappableContainer
+    SortableVector(MappableContainer<Data>&&) noexcept; // A vector obtained from a MappableContainer
 
     /* ************************************************************************ */
 

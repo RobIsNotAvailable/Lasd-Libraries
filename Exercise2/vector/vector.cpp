@@ -218,15 +218,15 @@ template <typename Data>
 SortableVector<Data> :: SortableVector(const TraversableContainer<Data>& con) : Vector<Data>(con){}
 
 template <typename Data>
-SortableVector<Data> :: SortableVector (MappableContainer<Data>&& con) : Vector<Data>(std::move(con)) {}
+SortableVector<Data> :: SortableVector (MappableContainer<Data>&& con) noexcept : Vector<Data>(std::move(con)){}
 
 // Copy Constructor and Move Constructor
 template <typename Data>
-SortableVector<Data>:: SortableVector(const SortableVector<Data> & vec) : Vector<Data> (vec) {}
+SortableVector<Data> :: SortableVector(const SortableVector<Data>& vec) : Vector<Data> (vec){}
 
 
 template <typename Data>
-SortableVector<Data>:: SortableVector(SortableVector<Data> && vec) noexcept : Vector<Data> (std::move(vec)) {}
+SortableVector<Data> :: SortableVector(SortableVector<Data>&& vec) noexcept : Vector<Data> (std::move(vec)){}
 
 
 //Copy Assignment and Move Assignment
