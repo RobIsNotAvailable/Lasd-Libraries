@@ -29,14 +29,14 @@ public:
   /* ************************************************************************ */
 
   // Specific constructors
-  HeapVec(const TraversableContainer<Data>& con) : Vector<Data>(con) {if (!IsHeap()) Heapify();} // A heap obtained from a TraversableContainer
-  HeapVec(MappableContainer<Data>&& con) noexcept : Vector<Data>(std::move(con)) {if (!IsHeap()) Heapify();} // A heap obtained from a MappableContainer
+  HeapVec(const TraversableContainer<Data>& con) : SortableVector<Data>(con) {if (!IsHeap()) Heapify();} // A heap obtained from a TraversableContainer
+  HeapVec(MappableContainer<Data>&& con) noexcept : SortableVector<Data>(std::move(con)) {if (!IsHeap()) Heapify();} // A heap obtained from a MappableContainer
 
   /* ************************************************************************ */
 
   // Copy constructor and Move constructor
-  HeapVec(const HeapVec<Data>& heap) : Vector<Data>(heap){};
-  HeapVec(HeapVec<Data>&& heap) noexcept : Vector<Data>(std::move(heap)){};
+  HeapVec(const HeapVec<Data>& heap) : SortableVector<Data>(heap){};
+  HeapVec(HeapVec<Data>&& heap) noexcept : SortableVector<Data>(std::move(heap)){};
 
   /* ************************************************************************ */
 
@@ -72,7 +72,7 @@ public:
   /* ************************************************************************ */
   // auxiliary functions
 
-  void MaxHeapify(ulong, ulong) noexcept;
+  void HeapifyDown(ulong, ulong) noexcept;
 };
 
 /* ************************************************************************** */

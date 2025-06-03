@@ -27,7 +27,7 @@ bool HeapVec<Data>::IsHeap() const noexcept
         ulong left = 2 * i + 1;
         ulong right = 2 * i + 2;
 
-        if (left < size && (*this)[i] < (*this)[left]) // static_cast<const Vector<Data>&>(*this)[i]
+        if (left < size && (*this)[i] < (*this)[left])
            return false;
         if (right < size && (*this)[i] < (*this)[right])
             return false;
@@ -43,7 +43,7 @@ void HeapVec<Data>::Heapify() noexcept
     
     for (ulong i = size / 2; i-- > 0;)
     {
-        MaxHeapify(i, size);
+        HeapifyDown(i, size);
     }
 }
 
@@ -56,7 +56,7 @@ void HeapVec<Data>::Sort() noexcept
     for (ulong i = size; i-- > 1; )
     {
         std::swap((*this)[0], (*this)[i]);
-        MaxHeapify(0, i);
+        HeapifyDown(0, i);
     }
 }
 
@@ -65,7 +65,7 @@ void HeapVec<Data>::Sort() noexcept
 // auxiliary functions
 
 template <typename Data>
-void HeapVec<Data>::MaxHeapify(ulong i, ulong heapSize) noexcept
+void HeapVec<Data>::HeapifyDown(ulong i, ulong heapSize) noexcept
 {
     ulong largest = i;
     ulong left = 2 * i + 1;
@@ -79,7 +79,7 @@ void HeapVec<Data>::MaxHeapify(ulong i, ulong heapSize) noexcept
     if (largest != i)
     {
         std::swap((*this)[i], (*this)[largest]);
-        MaxHeapify(largest, heapSize);
+        HeapifyDown(largest, heapSize);
     }
 }
 

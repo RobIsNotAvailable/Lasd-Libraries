@@ -47,6 +47,7 @@ template <typename Data>
 Vector<Data>::Vector(const Vector& vec)
 {
     size = vec.size;
+
     Elements = new Data[size];
     std::copy(vec.Elements, vec.Elements + size, Elements);
 }

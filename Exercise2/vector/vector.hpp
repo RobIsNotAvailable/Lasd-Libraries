@@ -92,7 +92,7 @@ class Vector : virtual public MutableLinearContainer<Data>, public ResizableCont
 /* ************************************************************************** */
 
 template <typename Data>
-class SortableVector : virtual public Vector<Data>, virtual public SortableLinearContainer<Data>
+class SortableVector : public Vector<Data>, virtual public SortableLinearContainer<Data>
 {
 
   protected:
