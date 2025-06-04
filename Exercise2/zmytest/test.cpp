@@ -25,10 +25,8 @@
 #include "../set/vec/setvec.hpp"
 #include "../vector/vector.hpp"
 
-#include "./specificTests/list.hpp"
-#include "./specificTests/vector.hpp"
-#include "./specificTests/set.hpp"
 #include "./specificTests/heap.hpp"
+#include "./specificTests/pqheap.hpp"
 #include "./test.hpp"
 
 using namespace std;
@@ -40,36 +38,20 @@ void mytest()
   uint loctestnum, loctesterr;
   uint stestnum = 0, stesterr = 0;
 
-  // loctestnum = 0; loctesterr = 0;
-  // daje::myVectorIntTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
-  // loctestnum = 0; loctesterr = 0;
-  // daje::myVectorStringTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
-  // loctestnum = 0; loctesterr = 0;
-  // daje::myListIntTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
-  // loctestnum = 0; loctesterr = 0;
-  // daje::myListStringTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
-  // loctestnum = 0; loctesterr = 0;
-  // daje::mySetIntTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
-  // loctestnum = 0; loctesterr = 0;
-  // daje::mySetStringTest(loctestnum, loctesterr);
-  // stestnum += loctestnum; stesterr += loctesterr;
-
   loctestnum = 0; loctesterr = 0;
   daje::myHeapVecIntTest(loctestnum, loctesterr);
   stestnum += loctestnum; stesterr += loctesterr;
 
   loctestnum = 0; loctesterr = 0;
   daje::myHeapVecStringTest(loctestnum, loctesterr);
+  stestnum += loctestnum; stesterr += loctesterr;
+
+  loctestnum = 0; loctesterr = 0;
+  daje::myPQHeapIntTest(loctestnum, loctesterr);
+  stestnum += loctestnum; stesterr += loctesterr;
+
+  loctestnum = 0; loctesterr = 0;
+  daje::myPQHeapStringTest(loctestnum, loctesterr);
   stestnum += loctestnum; stesterr += loctesterr;
 
   cout << endl << "Exercise 2 (Student's Test) (Errors/Tests: " << stesterr << "/" << stestnum << ")" << endl;

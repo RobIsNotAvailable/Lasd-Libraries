@@ -75,7 +75,7 @@ void PQHeap<Data>::Insert(Data&& val)
     Expand();
     
     ++size;
-    (*this)[size - 1] = std::move(val);
+    std::swap((*this)[size - 1], val);
     HeapifyUp(size - 1);
 }
 
@@ -96,9 +96,16 @@ void PQHeap<Data>::Change(ulong index, Data&& val)
     if (index >= size)
         throw std::out_of_range("Access at index " + std::to_string(index) + "; priority queue size " + std::to_string(size));
     
-    (*this)[index] = std::move(val);
+    std::swap((*this)[index], val);
     HeapifyUp(index);
     HeapifyDown(index, size);
+}
+
+template <typename Data>
+void PQHeap<Data>::Clear()
+{
+    HeapVec<Data>::Clear();
+    capacity = 0;
 }
 
 // auxiliary function
@@ -121,14 +128,14 @@ template <typename Data>
 void PQHeap<Data>::Expand()
 {
     if (size + 1 >= capacity)
-        AuxResize(capacity * 2);
+        AuxResize((capacity * 2) + 1);
 }
 
 template <typename Data>
 void PQHeap<Data>::Reduce()
 {
     if (size + 1 == capacity/4)
-        AuxResize(capacity/2);
+        AuxResize((capacity - 1)/2);
 }
 
 template <typename Data>

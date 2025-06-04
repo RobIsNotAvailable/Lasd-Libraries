@@ -63,6 +63,7 @@ public:
   void Change(ulong, const Data&) override; // Override PQ member (Copy of the value)
   void Change(ulong, Data&&) override; // Override PQ member (Move of the value)
 
+  void Clear();
 protected:
 
   void HeapifyUp(ulong);
