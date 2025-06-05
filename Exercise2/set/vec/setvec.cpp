@@ -348,7 +348,7 @@ template <typename Data>
 inline void SetVec<Data>::Clear()
 {
     head = tail = 0;
-    AuxResize(4);
+    Resize(4);
     size = 0;
 }
 /************************************************************* */
@@ -425,18 +425,18 @@ template <typename Data>
 void SetVec<Data>::Expand()
 {
     if (size + 1 == elements.Size())
-        AuxResize(elements.Size() * 2);
+        Resize(elements.Size() * 2);
 }
 
 template <typename Data>
 void SetVec<Data>::Reduce()
 {
     if (size + 1 == elements.Size()/4)
-        AuxResize(elements.Size()/2);
+        Resize(elements.Size()/2);
 }
 
 template <typename Data>
-void SetVec<Data>::AuxResize(ulong newSize)
+void SetVec<Data>::Resize(const ulong newSize)
 {
     Vector<Data> tmpElements = Vector<Data>(newSize);
     for (ulong i = head, j = 0; j < newSize; ++i %= elements.Size(), j++)

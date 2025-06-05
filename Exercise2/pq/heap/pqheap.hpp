@@ -19,12 +19,12 @@ class PQHeap : virtual public PQ<Data>, public HeapVec<Data>
 protected:
 
   using Container::size;
-  ulong capacity = 0;
+  ulong capacity = 4;
 
 public:
 
   // Default constructor
-  PQHeap() = default;
+  PQHeap() {Resize(4);}
 
   /* ************************************************************************ */
 
@@ -63,14 +63,15 @@ public:
   void Change(ulong, const Data&) override; // Override PQ member (Copy of the value)
   void Change(ulong, Data&&) override; // Override PQ member (Move of the value)
 
-  void Clear();
+  void Clear() override;
+  void Resize(const ulong) override;
+
 protected:
 
   void HeapifyUp(ulong);
   using HeapVec<Data>::HeapifyDown;
   void Expand();
   void Reduce();
-  void AuxResize(ulong);
 };
 
 /* ************************************************************************** */

@@ -104,8 +104,8 @@ void PQHeap<Data>::Change(ulong index, Data&& val)
 template <typename Data>
 void PQHeap<Data>::Clear()
 {
-    HeapVec<Data>::Clear();
-    capacity = 0;
+    Vector<Data>::Resize(4);
+    size = 0;
 }
 
 // auxiliary function
@@ -128,18 +128,18 @@ template <typename Data>
 void PQHeap<Data>::Expand()
 {
     if (size + 1 >= capacity)
-        AuxResize((capacity * 2) + 1);
+        Resize((capacity * 2) + 1);
 }
 
 template <typename Data>
 void PQHeap<Data>::Reduce()
 {
     if (size + 1 == capacity/4)
-        AuxResize((capacity - 1)/2);
+        Resize((capacity - 1)/2);
 }
 
 template <typename Data>
-void PQHeap<Data>::AuxResize(ulong newSize)
+void PQHeap<Data>::Resize(ulong newSize)
 {   
     ulong savedSize = size;
     Vector<Data>::Resize(newSize);

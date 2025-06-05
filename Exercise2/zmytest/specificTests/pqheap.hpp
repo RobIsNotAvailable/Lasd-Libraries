@@ -187,15 +187,24 @@ namespace daje
       IsHeap(loctestnum, loctesterr, pq, true);
     }
 
+    for (ulong i = 0; i + 1 < pq.Size(); i++)
+    {
+      Change(loctestnum, loctesterr, pq, true, i, vec[0]); // changing values in the pq so that the change move can actually change the values in the vec
+    }
+
     for (ulong i = 0; i + 1 < vec.Size(); i++)
     {
       if (i % 2 == 0)
-        Change(loctestnum, loctesterr, pq, true, i, vec[i] + vec[i + 1]);
+        Change(loctestnum, loctesterr, pq, true, i, vec[i]);
       else
-        ChangeM(loctestnum, loctesterr, pq, true, i, move(vec[i] + vec[i + 1]));
+        ChangeM(loctestnum, loctesterr, pq, true, i, move(vec[i]));
       
       IsHeap(loctestnum, loctesterr, pq, true);
     }
+
+    copvec.Sort();
+
+    EqualLinear(loctestnum, loctesterr, vec, copvec, false);
 
     Change(loctestnum, loctesterr, pq, 500, false, vec[0]);
 

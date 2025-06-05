@@ -103,6 +103,7 @@ public:
   // Specific member function (inherited from ClearableContainer)
   
   inline void Clear() override; // Override ClearableContainer member
+  void Resize(const ulong) override;
 
 protected:
   // Auxiliary functions 
@@ -112,7 +113,6 @@ protected:
 
   void Expand();
   void Reduce();
-  void AuxResize(ulong);
 
 };
 
