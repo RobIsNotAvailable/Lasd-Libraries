@@ -70,9 +70,12 @@ public:
   void Sort() noexcept; // Override SortableLinearContainer member
 
   /* ************************************************************************ */
+protected:
+
   // auxiliary functions
 
   void HeapifyDown(ulong, ulong) noexcept;
+  using SortableVector<Data>::Resize;
 };
 
 /* ************************************************************************** */

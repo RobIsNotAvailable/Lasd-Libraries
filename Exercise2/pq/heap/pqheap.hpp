@@ -64,7 +64,6 @@ public:
   void Change(ulong, Data&&) override; // Override PQ member (Move of the value)
 
   void Clear() override;
-  void Resize(const ulong) override;
 
 protected:
 
@@ -72,6 +71,8 @@ protected:
   using HeapVec<Data>::HeapifyDown;
   void Expand();
   void Reduce();
+  void Resize(const ulong) override;
+
 };
 
 /* ************************************************************************** */
